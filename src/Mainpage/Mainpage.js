@@ -4,25 +4,7 @@ import RecipeList from './RecipeList';
 import Pagination from './Pagination';
 import SearchBar from './SearchBar';
 import Spinner from './FyingPan';
-import firebase from 'firebase/compat/app'; 
-import 'firebase/compat/firestore';
-
-// Initialize Firebase (Make sure to replace these values with your Firebase project configuration)
-const firebaseConfig = {
-  apiKey: "AIzaSyB6fdL5k0xRPmoJgW83uEqW-PinL8irIYY",
-  authDomain: "recipe-server-f97e9.firebaseapp.com",
-  databaseURL: "https://recipe-server-f97e9-default-rtdb.asia-southeast1.firebasedatabase.app",
-  projectId: "recipe-server-f97e9",
-  storageBucket: "recipe-server-f97e9.appspot.com",
-  messagingSenderId: "180254957444",
-  appId: "1:180254957444:web:0005ba5c96b6f43f4487d1",
-  measurementId: "G-6LH3MWM22X"
-};
-
-if (!firebase.apps.length) {
-  firebase.initializeApp(firebaseConfig);
-}
-const db = firebase.firestore();
+import {db} from '../Firebase'
 
 const Mainpage = () => {
   const [recipes, setRecipes] = useState([]);
