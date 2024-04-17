@@ -54,7 +54,7 @@ const Mainpage = () => {
   );
 
   return (
-    <div style={{backgroundColor: '#FFCCBC'}}>
+    <div style={{background: 'linear-gradient(to bottom, #ffecd2, #fcb69f)'}}>
       <script>
       <link rel="preconnect" href="https://fonts.googleapis.com" />
       <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
