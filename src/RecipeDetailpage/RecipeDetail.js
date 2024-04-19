@@ -4,6 +4,7 @@ import { Editor } from '@tinymce/tinymce-react';
 import { Box, Typography, Rating, Button } from '@mui/material';
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/firestore';
+import { firestore, db } from '../Firebase';
 
 const RecipeDetail = () => {
   const location = useLocation();
@@ -34,28 +35,28 @@ const RecipeDetail = () => {
       }
     }
 
+    calculateAverageRating().then((rating) => {
+      console.log("rating" + rating)
+      setAverageRating(rating);
+    });
+
     return () => {
       window.removeEventListener('beforeunload', clearSessionStorage);
     };
   }, [currentRecipe]);
 
-  useEffect(() => {
-    calculateAverageRating().then((rating) => {
-      setAverageRating(rating);
-    });
-  }, [currentRecipe.id]);
-
   const incrementCounter = async (recipeId) => {
     try {
       // Create a reference to the counter document for the specific recipe
       const counterRef = firebase.firestore().collection('recipeCounters').doc(recipeId);
-
-      // Increment the counter by 1
-      await counterRef.update({ count: firebase.firestore.FieldValue.increment(1) });
+  
+      // Use set with merge option to increment the counter by 1 or create the document if it doesn't exist
+      await counterRef.set({ count: firebase.firestore.FieldValue.increment(1) }, { merge: true });
     } catch (error) {
       console.error('Error incrementing counter:', error);
     }
   };
+  
 
   const calculateAverageRating = async () => {
     try {
@@ -88,24 +89,25 @@ const RecipeDetail = () => {
       alert('You have already rated this recipe.');
       return;
     }
-
+  
     try {
       // Increment the counter for the selected rating in the database
       const ratingRef = firebase.firestore().collection('recipeRatings').doc(currentRecipe.id);
-      await ratingRef.update({
+      await ratingRef.set({
         [selectedRating]: firebase.firestore.FieldValue.increment(1)
-      });
-
+      }, { merge: true });
+  
       // Store a flag in client-side storage to indicate that the user has rated the recipe
       localStorage.setItem(`rated_${currentRecipe.id}`, 'true');
       setRated(true);
-
+  
       alert('Thank you for rating this recipe!');
     } catch (error) {
       console.error('Error rating recipe:', error);
       alert('An error occurred while rating the recipe. Please try again later.');
     }
   };
+  
 
   const handleRatingChange = (event, newValue) => {
     setSelectedRating(newValue);
@@ -143,7 +145,7 @@ const RecipeDetail = () => {
           Average Rating: {averageRating.toFixed(1)}
         </Typography>
         <Editor
-          apiKey= {process.env.REACT_APP_FIREBASE_TINYMCE_ID} // Replace with your TinyMCE API key
+          apiKey= 'cnra8bfoc01172abmclve5xtbay0i4b7q9lb7hq5qj977oem'// Replace with your TinyMCE API key
           init={{
             menubar: false,
             statusbar: false,
