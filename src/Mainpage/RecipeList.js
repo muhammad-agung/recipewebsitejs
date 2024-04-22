@@ -24,17 +24,15 @@ export default function ActionAreaCard({ recipes }) {
 
 function AdSlot() {
   return (
-    <Card sx={{ width: 400, height: 400, boxShadow: 3 }}>
+    <Card sx={{ height: 400, display: 'flex', justifyContent: 'center', alignItems: 'center', boxShadow: 3 }}>
       <CardContent>
         {/* Your AdSense code */}
         <ins
-          className="adsbygoogle"
-          style={{ display: 'block', width: '100%', height: '100%' }}
-          data-ad-client="ca-pub-8683472106710311"
-          data-ad-slot="6779483922"
-          data-ad-format="auto"
-          data-full-width-responsive="true"
-        ></ins>
+            className="adsbygoogle"
+            style={{ display: 'inline-block', width: '400px', height: '400px' }}
+            data-ad-client="ca-pub-8683472106710311"
+            data-ad-slot="6779483922"
+          ></ins>
         <script>{`(adsbygoogle = window.adsbygoogle || []).push({});`}</script>
       </CardContent>
     </Card>
