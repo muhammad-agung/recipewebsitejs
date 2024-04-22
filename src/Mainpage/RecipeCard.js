@@ -10,7 +10,7 @@ import 'firebase/compat/firestore';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import Rating from '@mui/material/Rating';
 
-export default function ActionAreaCard({ recipe }) {
+export default function ActionAreaCard({ recipe, index }) {
   const [count, setCount] = useState(0); // Initialize count as 0
   const [averageRating, setAverageRating] = useState(0); // Initialize averageRating as 0
 
@@ -41,10 +41,35 @@ export default function ActionAreaCard({ recipe }) {
   
     fetchData();
   }, [recipe.id]);
-  
-  return (
+
+  // Check if the current recipe index is a multiple of 4 (excluding the first one)
+  const isAdSlot = index > 0 && index % 4 === 0;
+
+  console.log('Index:', index);
+  console.log('isAdSlot:', isAdSlot);
+
+  // Render either the recipe card or the ad
+  return isAdSlot ? (
+    // Render the ad
     <Card sx={{ width: 400, boxShadow: 3 }}>
-      <CardActionArea component={RouterLink} to={`/recipe/${recipe.id}`}  state={{ currentRecipe: recipe }}>
+      <CardContent>
+        
+        {/* Add your AdSense ad code here */}
+        <script async custom-element="amp-ad" src="https://cdn.ampproject.org/v0/amp-ad-0.1.js"></script>
+        <amp-ad width="100vw" height="320"
+          type="adsense"
+          data-ad-client="ca-pub-8683472106710311"
+          data-ad-slot="6779483922"
+          data-auto-format="rspv"
+          data-full-width="">
+        <div overflow=""></div>
+      </amp-ad>
+      </CardContent>
+    </Card>
+  ) : (
+    // Render the recipe card
+    <Card sx={{ width: 400, boxShadow: 3 }}>
+      <CardActionArea component={RouterLink} to={`/recipe/${recipe.id}`} state={{ currentRecipe: recipe }}>
         <CardMedia
           component="img"
           height="400"
@@ -61,7 +86,7 @@ export default function ActionAreaCard({ recipe }) {
           <Stack direction="row" style={{ paddingLeft: 5, paddingTop: 5 }}>
             <VisibilityIcon fontSize='medium'/>
             <Typography style={{paddingRight: 5}}>{count}</Typography >
-          <Rating name="recipe-rating" value={averageRating} readOnly />
+            <Rating name="recipe-rating" value={averageRating} readOnly />
           </Stack>
         </CardContent>
       </CardActionArea>
