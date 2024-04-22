@@ -53,17 +53,16 @@ export default function ActionAreaCard({ recipe, index }) {
     // Render the ad
     <Card sx={{ width: 400, boxShadow: 3 }}>
       <CardContent>
-        
-        {/* Add your AdSense ad code here */}
-        <script async custom-element="amp-ad" src="https://cdn.ampproject.org/v0/amp-ad-0.1.js"></script>
-        <amp-ad width="100vw" height="320"
-          type="adsense"
+        {/* Your AdSense code */}
+        <ins
+          className="adsbygoogle"
+          style={{ display: 'block' }}
           data-ad-client="ca-pub-8683472106710311"
           data-ad-slot="6779483922"
-          data-auto-format="rspv"
-          data-full-width="">
-        <div overflow=""></div>
-      </amp-ad>
+          data-ad-format="auto"
+          data-full-width-responsive="true"
+        ></ins>
+        <script>{`(adsbygoogle = window.adsbygoogle || []).push({});`}</script>
       </CardContent>
     </Card>
   ) : (
