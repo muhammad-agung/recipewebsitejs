@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { AppBar, Toolbar } from '@mui/material';
+import { AppBar, Toolbar, Typography } from '@mui/material';
 import Stack from '@mui/material/Stack';
 import { Link } from 'react-router-dom';
 import { styled } from '@mui/material/styles';
@@ -13,8 +13,11 @@ const ColorButton = styled(Link)(({ theme }) => ({
   color: 'black',
   backgroundColor: 'white',
   fontFamily: "'Kalam', cursive",
-  fontWeight: 'bold',
   fontSize: 40,
+  textDecoration: 'none',
+  [theme.breakpoints.down('sm')]: {
+    fontSize: 21, // Adjust font size for smaller displays
+  },
   '&:hover': {
     backgroundColor: '#FBE9E7',
   },
@@ -56,13 +59,21 @@ const Header = () => {
       <Toolbar>
         <img src={websiteLogo} alt="Website Logo" style={{ width: logoSize, height: '10%', margin: '0 auto' }} />
       </Toolbar>
-      <Toolbar sx={{ justifyContent: 'center', backgroundColor: 'white', borderColor: 'black'}}>
-        <Stack direction="row" spacing={5}>
+      <Toolbar sx={{ justifyContent: 'space-between', backgroundColor: 'white', borderColor: 'black'}}>
+      <Stack direction="row" spacing={5}>
           <ColorButton to="/" variant="text" >
             Home
           </ColorButton>
+          <ColorButton to="/" variant="text" >
+            Categories
+          </ColorButton>
           <ColorButton to="/about" variant="text" >
             About
+          </ColorButton>
+        </Stack>
+        <Stack direction="row" spacing={5}>
+          <ColorButton variant="text">
+            Share us on:
           </ColorButton>
           <ColorButton onClick={handleShareWhatsApp} variant="text" >
             <WhatsAppIcon fontSize={'large'}/>
