@@ -10,7 +10,7 @@ import {db} from '../Firebase'
 const Mainpage = () => {
   const [recipes, setRecipes] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const [recipesPerPage] = useState(8);
+  const [recipesPerPage] = useState(9);
   const [searchTerm, setSearchTerm] = useState('');
   const [loading, setLoading] = useState(true);
 
