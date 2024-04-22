@@ -4,7 +4,8 @@ import { Editor } from '@tinymce/tinymce-react';
 import { Box, Typography, Rating, Button } from '@mui/material';
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/firestore';
-import { firestore, db } from '../Firebase';
+import Header from '../Components/Header';
+import Footer from '../Components/Footer';
 
 const RecipeDetail = () => {
   const location = useLocation();
@@ -17,47 +18,7 @@ const RecipeDetail = () => {
   // Determine the width percentage based on the display width
   const widthPercentage = window.innerWidth > 1000 ? '70%' : '100%';
 
-  useEffect(() => {
-    const clearSessionStorage = () => {
-      sessionStorage.removeItem('counterIncremented');
-    };
-
-    window.addEventListener('beforeunload', clearSessionStorage);
-
-    if (currentRecipe) {
-      // Check if the session storage flag exists
-      const viewedFlag = sessionStorage.getItem(`viewed_${currentRecipe.id}`);
-      if (!viewedFlag) {
-        // Increment counter only if recipe is viewed for the first time
-        incrementCounter(currentRecipe.id);
-        // Set the session storage flag to indicate that the recipe has been viewed
-        sessionStorage.setItem(`viewed_${currentRecipe.id}`, 'true');
-      }
-    }
-
-    calculateAverageRating().then((rating) => {
-      console.log("rating" + rating)
-      setAverageRating(rating);
-    });
-
-    return () => {
-      window.removeEventListener('beforeunload', clearSessionStorage);
-    };
-  }, [currentRecipe]);
-
-  const incrementCounter = async (recipeId) => {
-    try {
-      // Create a reference to the counter document for the specific recipe
-      const counterRef = firebase.firestore().collection('recipeCounters').doc(recipeId);
-  
-      // Use set with merge option to increment the counter by 1 or create the document if it doesn't exist
-      await counterRef.set({ count: firebase.firestore.FieldValue.increment(1) }, { merge: true });
-    } catch (error) {
-      console.error('Error incrementing counter:', error);
-    }
-  };
-  
-
+  // Function to calculate average rating
   const calculateAverageRating = async () => {
     try {
       // Create a reference to the rating document for the specific recipe
@@ -83,6 +44,52 @@ const RecipeDetail = () => {
     }
   };
 
+  useEffect(() => {
+    const clearSessionStorage = () => {
+      sessionStorage.removeItem('counterIncremented');
+    };
+  
+    const fetchData = async () => {
+      window.addEventListener('beforeunload', clearSessionStorage);
+  
+      if (currentRecipe) {
+        const viewedFlag = sessionStorage.getItem(`viewed_${currentRecipe.id}`);
+        if (!viewedFlag) {
+          incrementCounter(currentRecipe.id);
+          sessionStorage.setItem(`viewed_${currentRecipe.id}`, 'true');
+        }
+      }
+  
+      try {
+        const rating = await calculateAverageRating();
+        setAverageRating(rating);
+      } catch (error) {
+        console.error('Error fetching average rating:', error);
+        // Optionally, handle the error or set a default value for averageRating
+      }
+    };
+  
+    fetchData();
+  
+    return () => {
+      window.removeEventListener('beforeunload', clearSessionStorage);
+    };
+  }, [currentRecipe]);
+  
+  
+
+  const incrementCounter = async (recipeId) => {
+    try {
+      // Create a reference to the counter document for the specific recipe
+      const counterRef = firebase.firestore().collection('recipeCounters').doc(recipeId);
+  
+      // Use set with merge option to increment the counter by 1 or create the document if it doesn't exist
+      await counterRef.set({ count: firebase.firestore.FieldValue.increment(1) }, { merge: true });
+    } catch (error) {
+      console.error('Error incrementing counter:', error);
+    }
+  };
+  
   const handleRate = async () => {
     // Check if the user has already rated the recipe
     if (localStorage.getItem(`rated_${currentRecipe.id}`)) {
@@ -107,7 +114,6 @@ const RecipeDetail = () => {
       alert('An error occurred while rating the recipe. Please try again later.');
     }
   };
-  
 
   const handleRatingChange = (event, newValue) => {
     setSelectedRating(newValue);
@@ -115,6 +121,7 @@ const RecipeDetail = () => {
 
   return (
     <div style={{ width: '100%', background: 'linear-gradient(to bottom, #ffecd2, #fcb69f)' }}>
+      <Header />
       <Box
         sx={{
           display: 'flex',
@@ -142,10 +149,10 @@ const RecipeDetail = () => {
           </Button>
         </Box>
         <Typography variant="body2" color="text.secondary" sx={{ paddingTop: 2 }}>
-          Average Rating: {averageRating.toFixed(1)}
+          Average Rating: {averageRating ? averageRating.toFixed(1) : 'Loading...'}
         </Typography>
         <Editor
-          apiKey= 'cnra8bfoc01172abmclve5xtbay0i4b7q9lb7hq5qj977oem'// Replace with your TinyMCE API key
+          apiKey= {process.env.REACT_APP_FIREBASE_TINYMCE_ID}// Replace with your TinyMCE API key
           init={{
             menubar: false,
             statusbar: false,
@@ -157,6 +164,7 @@ const RecipeDetail = () => {
           disabled
         />
       </Box>
+      <Footer />
     </div>
   );
 };

@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 
 import Mainpage from './Mainpage/Mainpage'
 import RecipeDetail from './RecipeDetailpage/RecipeDetail'
+import AboutPage from './AboutPage/AboutPage'
 
 export default function App() {
   return (
@@ -10,6 +11,7 @@ export default function App() {
         <Routes>
           <Route path="/" element={<Mainpage />} />
           <Route path="/recipe/:id" element={<RecipeDetail />} />
+          <Route path="/about" element={<AboutPage />} />
           {/* 404 page */}
           <Route path="*" element={<Error404 />} />
         </Routes>

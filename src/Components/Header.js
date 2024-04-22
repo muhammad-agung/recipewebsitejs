@@ -1,17 +1,20 @@
 import React, { useState, useEffect } from 'react';
-import { AppBar, Toolbar, Button } from '@mui/material';
-import HomeIcon from '@mui/icons-material/Home';
+import { AppBar, Toolbar } from '@mui/material';
 import Stack from '@mui/material/Stack';
+import { Link } from 'react-router-dom';
 import { styled } from '@mui/material/styles';
+import FacebookIcon from '@mui/icons-material/Facebook';
+import WhatsAppIcon from '@mui/icons-material/WhatsApp';
 
 const websiteLogo = 'https://firebasestorage.googleapis.com/v0/b/recipe-server-f97e9.appspot.com/o/images%2FLogo.png?alt=media&token=585d27a3-fbfa-40ce-96b9-6339b3d38126'
 const backgroundLogo = "https://firebasestorage.googleapis.com/v0/b/recipe-server-f97e9.appspot.com/o/images%2Fheaderbackgroud.jpg?alt=media&token=3d3bb990-7952-44c6-a9ed-3d9ea7b6d9ec";
 
-const ColorButton = styled(Button)(({ theme }) => ({
+const ColorButton = styled(Link)(({ theme }) => ({
   color: 'black',
-   backgroundColor:'white',
-   fontFamily:"'Kalam', cursive",
-   fontWeight: 'bold', 
+  backgroundColor: 'white',
+  fontFamily: "'Kalam', cursive",
+  fontWeight: 'bold',
+  fontSize: 40,
   '&:hover': {
     backgroundColor: '#FBE9E7',
   },
@@ -38,6 +41,16 @@ const Header = () => {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
+  const handleShareWhatsApp = () => {
+    const url = window.location.href;
+    window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(url)}`);
+  };
+
+  const handleShareFacebook = () => {
+    const url = window.location.href;
+    window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`);
+  };
+
   return (
     <AppBar position="static" sx={{ backgroundColor: '#FBE9E7', boxShadow: 'none', borderColor: 'black', borderWidth: 10, backgroundImage: `url(${backgroundLogo})`, backgroundSize: 'cover', backgroundRepeat: 'no-repeat', backgroundPosition: 'center' }}>
       <Toolbar>
@@ -45,11 +58,17 @@ const Header = () => {
       </Toolbar>
       <Toolbar sx={{ justifyContent: 'center', backgroundColor: 'white', borderColor: 'black'}}>
         <Stack direction="row" spacing={5}>
-          <ColorButton variant="text" startIcon={<HomeIcon />} fontFamily={"'Kalam', cursive"} >
+          <ColorButton to="/" variant="text" >
             Home
           </ColorButton>
-          <ColorButton variant="text" startIcon={<HomeIcon /> } fontFamily={"'Kalam', cursive"} >
+          <ColorButton to="/about" variant="text" >
             About
+          </ColorButton>
+          <ColorButton onClick={handleShareWhatsApp} variant="text" >
+            <WhatsAppIcon fontSize={'large'}/>
+          </ColorButton>
+          <ColorButton onClick={handleShareFacebook} variant="text" >
+            <FacebookIcon fontSize={'large'}/>
           </ColorButton>
         </Stack>
       </Toolbar>

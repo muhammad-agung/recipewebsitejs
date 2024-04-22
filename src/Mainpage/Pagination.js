@@ -13,8 +13,8 @@ const PaginationComponent = ({ recipesPerPage, totalRecipes, paginate }) => {
   };
 
   return (
-    <Stack spacing={2} sx={{ display:"flex" , justifyContent:"center", alignItems:"center", marginTop : 10 }}>
-        <Pagination count={pageNumbers.length} variant="outlined" color="primary" onChange={handleChange}/>
+    <Stack spacing={2} sx={{ display:"flex" , justifyContent:"center", alignItems:"center", padding : 10 }}>
+        <Pagination count={pageNumbers.length} onChange={handleChange}/>
     </Stack>
   );
 };

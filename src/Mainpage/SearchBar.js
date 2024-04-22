@@ -38,7 +38,7 @@ const SearchBar = ({ handleSearch }) => {
 
       />
       </FormControl>
-      <Typography variant="h3" sx={{ margin: '60px', color: 'black', fontFamily: "'Kalam', cursive", fontWeight: 'bold' }}>Latest and Gratest</Typography>
+      <Typography variant="h3" sx={{ margin: '60px', color: 'black', fontFamily: "'Kalam', cursive", fontWeight: 'bold' }}>Latest and Greatest</Typography>
     </div>
   );
 };

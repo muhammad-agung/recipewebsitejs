@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import Header from './Header';
+import Header from '../Components/Header';
+import Footer from '../Components/Footer';
 import RecipeList from './RecipeList';
 import Pagination from './Pagination';
 import SearchBar from './SearchBar';
-import Spinner from './FyingPan';
+import Spinner from '../Components/FyingPan';
 import {db} from '../Firebase'
 
 const Mainpage = () => {
@@ -55,11 +56,6 @@ const Mainpage = () => {
 
   return (
     <div style={{background: 'linear-gradient(to bottom, #ffecd2, #fcb69f)'}}>
-      <script>
-      <link rel="preconnect" href="https://fonts.googleapis.com" />
-      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-      <link href="https://fonts.googleapis.com/css2?family=Kalam:wght@300;400;700&display=swap" rel="stylesheet" />
-      </script>
       <Header />
       <SearchBar handleSearch={handleSearch} />
       <RecipeList recipes={filteredRecipes} />
@@ -68,6 +64,7 @@ const Mainpage = () => {
         totalRecipes={recipes.length} // Use total number of all recipes
         paginate={paginate}
       />
+      <Footer />
     </div>
   );
 };

@@ -15,52 +15,33 @@ export default function ActionAreaCard({ recipe }) {
   const [averageRating, setAverageRating] = useState(0); // Initialize averageRating as 0
 
   useEffect(() => {
-    const fetchCounter = async () => {
+    const fetchData = async () => {
       try {
-        // Create a reference to the counter document for the specific recipe
+        // Fetch counter data
         const counterRef = firebase.firestore().collection('recipeCounters').doc(recipe.id);
-
-        // Fetch the counter document
-        const snapshot = await counterRef.get();
-
-        // If the document exists, update the count state with the fetched count value
-        if (snapshot.exists && snapshot.data().count !== undefined) {
-          setCount(snapshot.data().count);
+        const counterSnapshot = await counterRef.get();
+        if (counterSnapshot.exists && counterSnapshot.data().count !== undefined) {
+          setCount(counterSnapshot.data().count);
         }
-      } catch (error) {
-        console.error('Error fetching counter:', error);
-      }
-    };
-
-    fetchCounter();
-  }, [recipe.id]);
-
-  useEffect(() => {
-    const fetchAverageRating = async () => {
-      try {
-        // Create a reference to the rating document for the specific recipe
+  
+        // Fetch average rating data
         const ratingRef = firebase.firestore().collection('recipeRatings').doc(recipe.id);
-
-        // Fetch the rating document
-        const snapshot = await ratingRef.get();
-
-        // If the document exists, calculate the average rating
-        if (snapshot.exists) {
-          const data = snapshot.data();
+        const ratingSnapshot = await ratingRef.get();
+        if (ratingSnapshot.exists) {
+          const data = ratingSnapshot.data();
           const totalRatings = Object.values(data).reduce((acc, curr) => acc + curr, 0);
           const totalStars = Object.keys(data).reduce((acc, curr) => acc + parseInt(curr) * data[curr], 0);
           const averageRating = totalStars / totalRatings;
-
           setAverageRating(averageRating);
         }
       } catch (error) {
-        console.error('Error fetching average rating:', error);
+        console.error('Error fetching data:', error);
       }
     };
-
-    fetchAverageRating();
+  
+    fetchData();
   }, [recipe.id]);
-
+  
   return (
     <Card sx={{ width: 400, boxShadow: 3 }}>
       <CardActionArea component={RouterLink} to={`/recipe/${recipe.id}`}  state={{ currentRecipe: recipe }}>
