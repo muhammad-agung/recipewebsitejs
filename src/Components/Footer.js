@@ -14,6 +14,9 @@ const Footer = () => {
             muhdagung255@gmail.com
         </Link>
       </Typography>
+      <Typography variant="body2" color="text.secondary">
+        v1.0
+      </Typography>
     </div>
   );
 };
