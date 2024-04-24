@@ -1,6 +1,4 @@
 import { Routes, Route } from 'react-router-dom';
-import { Link } from "react-router-dom";
-
 import Mainpage from './Mainpage/Mainpage'
 import RecipeDetail from './RecipeDetailpage/RecipeDetail'
 import AboutPage from './AboutPage/AboutPage'

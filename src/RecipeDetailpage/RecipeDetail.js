@@ -18,7 +18,9 @@ const RecipeDetail = () => {
   // Determine the width percentage based on the display width
   const widthPercentage = window.innerWidth > 1000 ? '70%' : '100%';
 
-  // Function to calculate average rating
+
+  useEffect(() => {
+      // Function to calculate average rating
   const calculateAverageRating = async () => {
     try {
       // Create a reference to the rating document for the specific recipe
@@ -43,8 +45,7 @@ const RecipeDetail = () => {
       return 0; // Return 0 in case of error
     }
   };
-
-  useEffect(() => {
+  
     const clearSessionStorage = () => {
       sessionStorage.removeItem('counterIncremented');
     };
