@@ -11,7 +11,7 @@ import Select from '@mui/material/Select';
 
 const SearchBar = ({ handleSearch }) => {
   const [searchTerm, setSearchTerm] = useState('');
-  const [category, setCategory] = useState('');
+  // const [category, setCategory] = useState('');
 
   const handleChange = event => {
     const value = event.target.value;
@@ -19,11 +19,11 @@ const SearchBar = ({ handleSearch }) => {
     handleSearch(value); // Pass the search term to the parent component
   };
 
-  const handleCategory = event => {
-    const value = event.target.value;
-    setSearchTerm(value);
-    handleSearch(value); // Pass the search term to the parent component
-  };
+  // const handleCategory = event => {
+  //   const value = event.target.value;
+  //   setSearchTerm(value);
+  //   handleSearch(searchTerm, value);
+  // };
 
   return (
     <div className="search-bar" style={{textAlign: 'center', margin: 50}}>
@@ -45,7 +45,7 @@ const SearchBar = ({ handleSearch }) => {
 
       />
      </FormControl>
-      <FormControl sx={{ m: 1, minWidth: 120 }}>
+      {/* <FormControl sx={{ m: 1, minWidth: 120 }}>
         <Select
           value={category}
           onChange={handleCategory}
@@ -59,7 +59,7 @@ const SearchBar = ({ handleSearch }) => {
           <MenuItem value={20}>Twenty</MenuItem>
           <MenuItem value={30}>Thirty</MenuItem>
         </Select>
-      </FormControl>
+      </FormControl> */}
       <Typography variant="h3" sx={{ margin: '60px', color: 'black', fontFamily: "'Kalam', cursive", fontWeight: 'bold' }}>Latest and Greatest</Typography>
     </div>
   );
