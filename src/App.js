@@ -2,12 +2,16 @@ import { Routes, Route } from 'react-router-dom';
 import Mainpage from './Mainpage/Mainpage'
 import RecipeDetail from './RecipeDetailpage/RecipeDetail'
 import AboutPage from './AboutPage/AboutPage'
+import CategoriesPage from './Category/CategoriesPage'
+import CategoryRecipesPage from './Category/CategoryRecipesPage'
 
 export default function App() {
   return (
     <>
         <Routes>
           <Route path="/" element={<Mainpage />} />
+          <Route path="/categories" element={<CategoriesPage />} />
+          <Route path="/category/:id" element={<CategoryRecipesPage />} />
           <Route path="/recipe/:id" element={<RecipeDetail />} />
           <Route path="/about" element={<AboutPage />} />
           {/* 404 page */}

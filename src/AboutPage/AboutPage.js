@@ -20,10 +20,10 @@ const Aboutpage = () => {
     <div style={{background: 'linear-gradient(to bottom, #ffecd2, #fcb69f)', minHeight:'5vh'}}>
       <Header />
       <div style={{ textAlign: 'center', padding: '20%' }}>
-      <Typography variant="h4" gutterBottom fontFamily={"'Kalam', cursive"}>
+      <Typography variant="h4" gutterBottom fontFamily={"Kaushan Script, cursive"}>
         About Us
       </Typography>
-      <Typography variant="h6" fontFamily={"'Kalam', cursive"}>
+      <Typography variant="h6">
         This website is created for sharing my personal recipes that have been tested and adjusted to taste based on Southeast Asian cuisine, particularly Indonesian. It was created with love and based on years of cooking experience as a mother and veteran chef.
       </Typography>
     </div>

@@ -24,14 +24,17 @@ const Mainpage = () => {
           recipeData.push({ id: doc.id, ...doc.data() });
         });
         setRecipes(recipeData);
-        // Simulate 2 seconds loading delay
-        setTimeout(() => setLoading(false), 2000);
       } catch (error) {
         console.error('Error fetching recipes:', error);
+      } finally {
+        setLoading(false); // Set loading to false regardless of success or failure
       }
     };
-
-    fetchRecipes();
+  
+    const timeoutId = setTimeout(() => fetchRecipes(), 2000);
+  
+    // Cleanup function to cancel the setTimeout when the component unmounts or the effect re-executes
+    return () => clearTimeout(timeoutId);
   }, []);
 
   if (loading) {

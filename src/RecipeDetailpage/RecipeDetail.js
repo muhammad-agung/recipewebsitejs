@@ -1,51 +1,67 @@
 import React, { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
-import { Editor } from '@tinymce/tinymce-react';
+import { useParams } from 'react-router-dom';
 import { Box, Typography, Rating, Button } from '@mui/material';
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/firestore';
 import Header from '../Components/Header';
 import Footer from '../Components/Footer';
+import { Editor } from '@tinymce/tinymce-react';
+
 
 const RecipeDetail = () => {
-  const location = useLocation();
-  const currentRecipe = location.state && location.state.currentRecipe;
-
-  const [selectedRating, setSelectedRating] = useState(null); // Initialize selectedRating as null
-  const [rated, setRated] = useState(false); // Initialize rated state as false
-  const [averageRating, setAverageRating] = useState(0); // Initialize averageRating as 0
+  const { id } = useParams();
+  const [currentRecipe, setCurrentRecipe] = useState(null);
+  const [selectedRating, setSelectedRating] = useState(null);
+  const [rated, setRated] = useState(false);
+  const [averageRating, setAverageRating] = useState(0);
 
   // Determine the width percentage based on the display width
   const widthPercentage = window.innerWidth > 1000 ? '70%' : '100%';
 
 
   useEffect(() => {
-      // Function to calculate average rating
-  const calculateAverageRating = async () => {
-    try {
-      // Create a reference to the rating document for the specific recipe
-      const ratingRef = firebase.firestore().collection('recipeRatings').doc(currentRecipe.id);
-
-      // Fetch the rating document
-      const snapshot = await ratingRef.get();
-
-      // If the document exists, calculate the average rating
-      if (snapshot.exists) {
-        const data = snapshot.data();
-        const totalRatings = Object.values(data).reduce((acc, curr) => acc + curr, 0);
-        const totalStars = Object.keys(data).reduce((acc, curr) => acc + parseInt(curr) * data[curr], 0);
-        const averageRating = totalStars / totalRatings;
-
-        return averageRating;
+    const fetchRecipe = async () => {
+      try {
+        const recipeDoc = await firebase.firestore().collection('users').doc(id).get();
+        if (recipeDoc.exists) {
+          setCurrentRecipe({ id: recipeDoc.id, ...recipeDoc.data() });
+        } else {
+          console.log('Recipe not found');
+        }
+      } catch (error) {
+        console.error('Error fetching recipe:', error);
       }
-
-      return 0; // Return 0 if no ratings exist yet
-    } catch (error) {
-      console.error('Error calculating average rating:', error);
-      return 0; // Return 0 in case of error
-    }
-  };
+    };
   
+    fetchRecipe();
+  }, [id]);
+  
+  useEffect(() => {
+    const calculateAverageRating = async () => {
+      try {
+        if (!currentRecipe) {
+          return 0;
+        }
+  
+        const ratingRef = firebase.firestore().collection('recipeRatings').doc(currentRecipe.id);
+        const snapshot = await ratingRef.get();
+  
+        if (snapshot.exists) {
+          const data = snapshot.data();
+          const totalRatings = Object.values(data).reduce((acc, curr) => acc + curr, 0);
+          const totalStars = Object.keys(data).reduce((acc, curr) => acc + parseInt(curr) * data[curr], 0);
+          const averageRating = totalStars / totalRatings;
+  
+          return averageRating;
+        }
+  
+        return 0;
+      } catch (error) {
+        console.error('Error calculating average rating:', error);
+        return 0;
+      }
+    };
+
     const clearSessionStorage = () => {
       sessionStorage.removeItem('counterIncremented');
     };
@@ -66,7 +82,6 @@ const RecipeDetail = () => {
         setAverageRating(rating);
       } catch (error) {
         console.error('Error fetching average rating:', error);
-        // Optionally, handle the error or set a default value for averageRating
       }
     };
   
@@ -75,7 +90,8 @@ const RecipeDetail = () => {
     return () => {
       window.removeEventListener('beforeunload', clearSessionStorage);
     };
-  }, [currentRecipe]);
+  }, [currentRecipe]); // Include currentRecipe in the dependency array
+  
   
   
 
@@ -119,52 +135,54 @@ const RecipeDetail = () => {
   const handleRatingChange = (event, newValue) => {
     setSelectedRating(newValue);
   };
-
+  
   return (
     <div style={{ width: '100%', background: 'linear-gradient(to bottom, #ffecd2, #fcb69f)' }}>
       <Header />
-      <Box
-        sx={{
-          display: 'flex',
-          justifyContent: 'center',
-          flexDirection: 'column',
-          alignItems: 'center',
-          padding: '1%',
-        }}
-      >
-        <Typography variant="h3" fontFamily="'Kalam', cursive" style={{ paddingBottom: 20 }}>{currentRecipe.title}</Typography>
-        <Typography variant="h5" fontFamily="'Kalam', cursive" style={{ paddingBottom: 20 }}>{currentRecipe.shortDesc}</Typography>
-        <Box sx={{ display: 'flex', alignItems: 'center' }}>
-          <Typography variant="body2" color="text.secondary">
-            Rate this recipe:
-          </Typography>
-          <Rating
-            name="recipe-rating"
-            value={selectedRating}
-            onChange={handleRatingChange}
-            size="large"
-            style={{ color: rated ? 'primary' : 'disabled' }}
-          />
-          <Button onClick={handleRate} disabled={!selectedRating}>
-            {rated ? 'Rated' : 'Rate'}
-          </Button>
-        </Box>
-        <Typography variant="body2" color="text.secondary" sx={{ paddingTop: 2 }}>
-          Average Rating: {averageRating ? averageRating.toFixed(1) : 'Loading...'}
-        </Typography>
-        <Editor
-          apiKey= {process.env.REACT_APP_FIREBASE_TINYMCE_ID}// Replace with your TinyMCE API key
-          init={{
-            menubar: false,
-            statusbar: false,
-            toolbar: false,
-            width: widthPercentage,
-            height: 800,
+      {currentRecipe && (
+        <Box
+          sx={{
+            display: 'flex',
+            justifyContent: 'center',
+            flexDirection: 'column',
+            alignItems: 'center',
+            padding: '1%',
           }}
-          initialValue={currentRecipe.content} // Pass the content as initialValue
-          disabled
-        />
-      </Box>
+        >
+          <Typography variant="h3" fontFamily={"Kaushan Script, cursive"} style={{ paddingBottom: 20 }}>{currentRecipe.title}</Typography>
+          <Typography variant="h5" style={{ paddingBottom: 20 }}>{currentRecipe.shortDesc}</Typography>
+          <Box sx={{ display: 'flex', alignItems: 'center' }}>
+            <Typography variant="body2" color="text.secondary">
+              Rate this recipe:
+            </Typography>
+            <Rating
+              name="recipe-rating"
+              value={selectedRating}
+              onChange={handleRatingChange}
+              size="large"
+              style={{ color: rated ? 'primary' : 'disabled' }}
+            />
+            <Button onClick={handleRate} disabled={!selectedRating}>
+              {rated ? 'Rated' : 'Rate'}
+            </Button>
+          </Box>
+          <Typography variant="body2" color="text.secondary" sx={{ paddingTop: 2 }}>
+            Average Rating: {averageRating ? averageRating.toFixed(1) : 'Loading...'}
+          </Typography>
+          <Editor
+            apiKey={process.env.REACT_APP_FIREBASE_TINYMCE_ID}
+            init={{
+              menubar: false,
+              statusbar: false,
+              toolbar: false,
+              width: widthPercentage,
+              height: 800,
+            }}
+            initialValue={currentRecipe.content}
+            disabled
+          />
+        </Box>
+      )}
       <Footer />
     </div>
   );

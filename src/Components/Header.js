@@ -13,7 +13,7 @@ const backgroundLogo = "https://firebasestorage.googleapis.com/v0/b/recipe-serve
 const ColorButton = styled(Link)(({ theme }) => ({
   color: 'black',
   backgroundColor: 'white',
-  fontFamily: "'Kalam', cursive",
+  // fontFamily:"Kaushan Script, cursive",
   fontSize: 40,
   textDecoration: 'none',
   [theme.breakpoints.down('sm')]: {
@@ -88,7 +88,7 @@ const Header = () => {
               </ColorButton>
             </MenuItem>
             <MenuItem>
-              <ColorButton to="/" variant="text" >
+              <ColorButton to="/categories" variant="text" >
                 Categories
               </ColorButton>
             </MenuItem>
@@ -116,7 +116,7 @@ const Header = () => {
             <ColorButton to="/" variant="text" >
               Home
             </ColorButton>
-            <ColorButton to="/" variant="text" >
+            <ColorButton to="/categories" variant="text" >
               Categories
             </ColorButton>
             <ColorButton to="/about" variant="text" >
