@@ -26,9 +26,10 @@ const Adsense = () => {
     <CardContent>
     <ins
       className="adsbygoogle"
-      style={{ display: 'inline-block', width: '400px', height: '400px' }}
+      style={{ display: "block", width: "100%", height: "auto" }}
       data-ad-client="ca-pub-8683472106710311"
       data-ad-slot="6779483922"
+      data-ad-format="auto"
       data-full-width-responsive="true"
     ></ins>
           </CardContent>
