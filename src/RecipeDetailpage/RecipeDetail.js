@@ -132,8 +132,8 @@ const RecipeDetail = () => {
           padding: '1%',
         }}
       >
-        <Typography variant="h3" fontFamily="'Kalam', cursive" style={{ paddingBottom: 20 }}>{currentRecipe.title}</Typography>
-        <Typography variant="h5" fontFamily="'Kalam', cursive" style={{ paddingBottom: 20 }}>{currentRecipe.shortDesc}</Typography>
+        <Typography variant="h3" fontFamily={"Kaushan Script, cursive"} style={{ paddingBottom: 20 }}>{currentRecipe.title}</Typography>
+        <Typography variant="h5" style={{ paddingBottom: 20 }}>{currentRecipe.shortDesc}</Typography>
         <Box sx={{ display: 'flex', alignItems: 'center' }}>
           <Typography variant="body2" color="text.secondary">
             Rate this recipe:

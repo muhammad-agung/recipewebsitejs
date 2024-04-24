@@ -1,6 +1,5 @@
 import React from 'react';
 import FormControl from '@mui/material/FormControl';
-import {Typography } from '@mui/material';
 import TextField from '@mui/material/TextField';
 import InputAdornment from '@mui/material/InputAdornment';
 import SearchIcon from '@mui/icons-material/Search';
@@ -33,7 +32,6 @@ const SearchBar = ({ handleSearch }) => {
 
       />
      </FormControl>
-      <Typography variant="h3" sx={{ margin: '60px', color: 'black', fontFamily:"Kaushan Script, cursive"}}>Latest and Greatest</Typography>
     </div>
   );
 };
