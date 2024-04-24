@@ -1,21 +1,19 @@
-import React, { useState } from 'react';
+import React from 'react';
 import FormControl from '@mui/material/FormControl';
 import {Typography } from '@mui/material';
 import TextField from '@mui/material/TextField';
 import InputAdornment from '@mui/material/InputAdornment';
 import SearchIcon from '@mui/icons-material/Search';
-import MenuItem from '@mui/material/MenuItem';
-import Select from '@mui/material/Select';
+// import MenuItem from '@mui/material/MenuItem';
+// import Select from '@mui/material/Select';
 
 
 
 const SearchBar = ({ handleSearch }) => {
-  const [searchTerm, setSearchTerm] = useState('');
   // const [category, setCategory] = useState('');
 
   const handleChange = event => {
     const value = event.target.value;
-    setSearchTerm(value);
     handleSearch(value); // Pass the search term to the parent component
   };
 
