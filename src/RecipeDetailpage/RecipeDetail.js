@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { Box, Typography, Rating, Button } from '@mui/material';
+import { Box, Typography, Rating, Button, IconButton } from '@mui/material';
+import { Share } from '@mui/icons-material';
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/firestore';
 import Header from '../Components/Header';
 import Footer from '../Components/Footer';
 import { Editor } from '@tinymce/tinymce-react';
+import FryingPan from '../Components/FyingPan'
 
 
 const RecipeDetail = () => {
@@ -14,6 +16,8 @@ const RecipeDetail = () => {
   const [selectedRating, setSelectedRating] = useState(null);
   const [rated, setRated] = useState(false);
   const [averageRating, setAverageRating] = useState(0);
+  const [loadingEditor, setLoadingEditor] = useState(true);
+
 
   // Determine the width percentage based on the display width
   const widthPercentage = window.innerWidth > 1000 ? '70%' : '100%';
@@ -93,6 +97,12 @@ const RecipeDetail = () => {
   }, [currentRecipe]); // Include currentRecipe in the dependency array
   
   
+  useEffect(() => {
+    const editorLoadingTimeout = setTimeout(() => {
+      setLoadingEditor(false);
+    }, 2000);
+    return () => clearTimeout(editorLoadingTimeout);
+  }, []);
   
 
   const incrementCounter = async (recipeId) => {
@@ -135,6 +145,20 @@ const RecipeDetail = () => {
   const handleRatingChange = (event, newValue) => {
     setSelectedRating(newValue);
   };
+
+
+  const handleShare = () => {
+    const recipeLink = `mamakusrecipe.com/recipe/${currentRecipe.id}`;
+
+    // Create a temporary textarea element to copy the link to clipboard
+    const textarea = document.createElement('textarea');
+    textarea.value = recipeLink;
+    document.body.appendChild(textarea);
+    textarea.select();
+    document.execCommand('copy');
+    document.body.removeChild(textarea);
+    alert('Share link copied!');
+  };
   
   return (
     <div style={{ width: '100%', background: 'linear-gradient(to bottom, #ffecd2, #fcb69f)' }}>
@@ -167,20 +191,27 @@ const RecipeDetail = () => {
             </Button>
           </Box>
           <Typography variant="body2" color="text.secondary" sx={{ paddingTop: 2 }}>
-            Average Rating: {averageRating ? averageRating.toFixed(1) : 'Loading...'}
+            Rating: {averageRating ? averageRating.toFixed(1) : 'No rating yet'}
           </Typography>
-          <Editor
-            apiKey={process.env.REACT_APP_FIREBASE_TINYMCE_ID}
-            init={{
-              menubar: false,
-              statusbar: false,
-              toolbar: false,
-              width: widthPercentage,
-              height: 800,
-            }}
-            initialValue={currentRecipe.content}
-            disabled
-          />
+          <IconButton onClick={handleShare} style={{ marginTop: '10px' }}>
+            Share<Share />
+          </IconButton>
+          {loadingEditor ? (
+            <FryingPan />
+          ) : (
+            <Editor
+              apiKey={process.env.REACT_APP_FIREBASE_TINYMCE_ID}
+              init={{
+                menubar: false,
+                statusbar: false,
+                toolbar: false,
+                width: widthPercentage,
+                height: 800,
+              }}
+              initialValue={currentRecipe.content}
+              disabled
+            />
+          )}
         </Box>
       )}
       <Footer />
