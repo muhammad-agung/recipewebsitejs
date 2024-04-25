@@ -9,5 +9,3 @@ This is a recipe website
 full website: https://mamakusrecipe.vercel.app/
 
 please use https://github.com/muhammad-agung/recipedashboardjs as its backend to upload the recipes
-
-![image](https://github.com/muhammad-agung/recipewebsitejs/assets/64388091/eda651ca-3d0b-4ed6-be80-37b20b9d825a)
