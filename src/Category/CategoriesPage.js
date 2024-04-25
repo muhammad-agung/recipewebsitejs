@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardMedia, Typography, Grid } from '@mui/material';
-import Header from '../Components/Header';
 import { db } from '../Firebase';
 import { Link } from 'react-router-dom'; // Import Link for navigation
+
 
 const CategoriesPage = () => {
   const [categories, setCategory] = useState([]);
@@ -26,7 +26,6 @@ const CategoriesPage = () => {
 
   return (
     <div style={{ background: 'linear-gradient(to bottom, #ffecd2, #fcb69f)' }}>
-      <Header />
       <Typography variant="h2" gutterBottom style={{ textAlign: 'center', margin: '20px' }} fontFamily={"Kaushan Script, cursive"}>
         Categories
       </Typography>

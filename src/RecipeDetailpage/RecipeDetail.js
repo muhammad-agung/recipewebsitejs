@@ -4,8 +4,6 @@ import { Box, Typography, Rating, Button, IconButton } from '@mui/material';
 import { Share } from '@mui/icons-material';
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/firestore';
-import Header from '../Components/Header';
-import Footer from '../Components/Footer';
 import { Editor } from '@tinymce/tinymce-react';
 import FryingPan from '../Components/FyingPan'
 
@@ -162,7 +160,6 @@ const RecipeDetail = () => {
   
   return (
     <div style={{ width: '100%', background: 'linear-gradient(to bottom, #ffecd2, #fcb69f)' }}>
-      <Header />
       {currentRecipe && (
         <Box
           sx={{
@@ -214,7 +211,6 @@ const RecipeDetail = () => {
           )}
         </Box>
       )}
-      <Footer />
     </div>
   );
 };

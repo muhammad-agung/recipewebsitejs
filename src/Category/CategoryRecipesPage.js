@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useLocation } from 'react-router-dom';
 import { Typography, Grid } from '@mui/material';
-import Header from '../Components/Header';
 import RecipeCard from './RecipeCard'; // Import your RecipeCard component
 import SearchBar from './SearchBar';
 import { db } from '../Firebase';
+
 
 const CategoryRecipesPage = () => {
   const { category } = useParams(); // Get categoryId from URL parameter
@@ -46,7 +46,6 @@ const CategoryRecipesPage = () => {
 
   return (
     <div style={{ background: 'linear-gradient(to bottom, #ffecd2, #fcb69f)' }}>
-      <Header />
       <Typography variant="h2" gutterBottom style={{ textAlign: 'center', margin: '20px' }} fontFamily={"Kaushan Script, cursive"}>
         Recipes for {state.categoryId}
       </Typography>

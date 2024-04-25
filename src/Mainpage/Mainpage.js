@@ -1,6 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import Header from '../Components/Header';
-import Footer from '../Components/Footer';
 import RecipeList from './RecipeList';
 import Pagination from './Pagination';
 import SearchBar from './SearchBar';
@@ -59,7 +57,6 @@ const Mainpage = () => {
 
   return (
     <div style={{background: 'linear-gradient(to bottom, #ffecd2, #fcb69f)'}}>
-      <Header />
       <SearchBar handleSearch={handleSearch} />
       <RecipeList recipes={filteredRecipes} />
       <Pagination
@@ -67,7 +64,6 @@ const Mainpage = () => {
         totalRecipes={recipes.length} // Use total number of all recipes
         paginate={paginate}
       />
-      <Footer />
     </div>
   );
 };

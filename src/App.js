@@ -4,10 +4,13 @@ import RecipeDetail from './RecipeDetailpage/RecipeDetail'
 import AboutPage from './AboutPage/AboutPage'
 import CategoriesPage from './Category/CategoriesPage'
 import CategoryRecipesPage from './Category/CategoryRecipesPage'
+import Header from './Components/Header';
+import Footer from './Components/Footer';
 
 export default function App() {
   return (
     <>
+      <Header />
         <Routes>
           <Route path="/" element={<Mainpage />} />
           <Route path="/categories" element={<CategoriesPage />} />
@@ -17,6 +20,7 @@ export default function App() {
           {/* 404 page */}
           <Route path="*" element={<Error404 />} />
         </Routes>
+      <Footer />
     </>
   );
  }
