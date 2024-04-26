@@ -7,6 +7,7 @@
     "@draft-js-plugins/editor": "^4.1.4",
     "@emotion/react": "^11.11.4",
     "@emotion/styled": "^11.11.5",
+    "@microlink/react": "^5.5.18",
     "@mui/icons-material": "^5.15.15",
     "@mui/material": "^5.15.15",
     "@testing-library/jest-dom": "^5.17.0",
@@ -23,6 +24,7 @@
     "react-draft-wysiwyg": "^1.15.0",
     "react-router-dom": "^6.22.3",
     "react-scripts": "^5.0.1",
+    "url": "^0.11.3",
     "web-vitals": "^2.1.4"
   },
   "scripts": {

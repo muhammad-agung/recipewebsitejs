@@ -25,7 +25,7 @@ const CategoriesPage = () => {
   }, []);
 
   return (
-    <div style={{ background: 'linear-gradient(to bottom, #ffecd2, #fcb69f)' }}>
+    <div style={{ background: 'linear-gradient(to bottom, #ffecd2, #fcb69f)', paddingTop:10 }}>
       <Typography variant="h2" gutterBottom style={{ textAlign: 'center', margin: '20px' }} fontFamily={"Kaushan Script, cursive"}>
         Categories
       </Typography>

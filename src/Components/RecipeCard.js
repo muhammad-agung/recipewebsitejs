@@ -1,23 +1,17 @@
 import React, { useEffect, useState } from 'react';
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
-import Typography from '@mui/material/Typography';
-import { CardActionArea, Stack } from '@mui/material';
-import { Link as RouterLink } from 'react-router-dom';
-import firebase from 'firebase/compat/app';
-import 'firebase/compat/firestore';
+import { CardActionArea, Stack, Rating, Typography, CardMedia, CardContent, Card } from '@mui/material';
 import VisibilityIcon from '@mui/icons-material/Visibility';
-import Rating from '@mui/material/Rating';
+import { Link as RouterLink } from 'react-router-dom';
+import {firebase} from '../Firebase';
 
 export default function ActionAreaCard({ recipe }) {
-  const [count, setCount] = useState(0); // Initialize count as 0
-  const [averageRating, setAverageRating] = useState(0); // Initialize averageRating as 0
+  const [count, setCount] = useState(0); 
+  const [averageRating, setAverageRating] = useState(0);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // Fetch counter data
+        // Fetch view count data
         const counterRef = firebase.firestore().collection('recipeCounters').doc(recipe.id);
         const counterSnapshot = await counterRef.get();
         if (counterSnapshot.exists && counterSnapshot.data().count !== undefined) {

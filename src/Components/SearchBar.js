@@ -1,10 +1,8 @@
 import React from 'react';
-import FormControl from '@mui/material/FormControl';
-import TextField from '@mui/material/TextField';
-import InputAdornment from '@mui/material/InputAdornment';
+import {Typography, InputAdornment, TextField, FormControl } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 
-const SearchBar = ({ handleSearch }) => {
+const SearchBar = ({ handleSearch, pageTitle }) => {
 
 
   const handleChange = event => {
@@ -14,6 +12,7 @@ const SearchBar = ({ handleSearch }) => {
 
   return (
     <div className="search-bar" style={{textAlign: 'center', margin: 50}}>
+      <Typography variant="h3" sx={{ margin: '60px', color: 'black', fontFamily:"Kaushan Script, cursive"}}>{pageTitle}</Typography>
       <FormControl sx={{ m: 1, minWidth: 120 }}>
         <TextField
           id="filled-search"

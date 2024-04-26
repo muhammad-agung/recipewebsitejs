@@ -2,8 +2,8 @@ import { Routes, Route } from 'react-router-dom';
 import Mainpage from './Mainpage/Mainpage'
 import RecipeDetail from './RecipeDetailpage/RecipeDetail'
 import AboutPage from './AboutPage/AboutPage'
-import CategoriesPage from './Category/CategoriesPage'
-import CategoryRecipesPage from './Category/CategoryRecipesPage'
+import CategoriesPage from './Categories/CategoriesPage'
+import CategoryRecipesPage from './CategoryRecipe/CategoryRecipesPage'
 import Header from './Components/Header';
 import Footer from './Components/Footer';
 

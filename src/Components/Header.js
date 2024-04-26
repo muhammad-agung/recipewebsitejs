@@ -67,7 +67,7 @@ const Header = () => {
   };
 
   return (
-    <AppBar position="static" sx={{ backgroundColor: '#FBE9E7', boxShadow: 'none', borderColor: 'black', borderWidth: 10, backgroundImage: `url(${backgroundLogo})`, backgroundSize: 'cover', backgroundRepeat: 'no-repeat', backgroundPosition: 'center' }}>
+    <AppBar position="static" sx={{ backgroundColor: '#FBE9E7', boxShadow: 'none', borderColor: 'black', backgroundImage: `url(${backgroundLogo})`, backgroundSize: 'cover', backgroundRepeat: 'no-repeat', backgroundPosition: 'center' }}>
       <Toolbar>
         <img src={websiteLogo} alt="Website Logo" style={{ width: logoSize, height: '10%', margin: '0 auto' }} />
       </Toolbar>
@@ -123,7 +123,7 @@ const Header = () => {
               About
             </ColorButton>
           </Stack>
-          <Stack direction="row" spacing={5}>
+          <Stack direction="row" spacing={2}>
             <ColorButton variant="text">
               Share us on:
             </ColorButton>

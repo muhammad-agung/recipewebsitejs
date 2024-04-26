@@ -5,13 +5,13 @@ import Grid from '@mui/material/Unstable_Grid2';
 
 
 
-export default function ActionAreaCard({ recipes }) {
+export default function RecipeList({ recipes }) {
 
   return (
     <div>
-    <Grid container spacing={2} justifyContent="center" padding={2}>
+    <Grid container spacing={2} justifyContent="center" paddingLeft={2} width={'100%'}>
       {recipes.map((recipe) => (
-        <Grid item key={recipe.id} xs={16} sm={8} md={4}>
+        <Grid key={recipe.id} xs={16} sm={8} md={4}>
           <RecipeCard recipe={recipe} />
         </Grid>
       ))}

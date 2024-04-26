@@ -2,10 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { Box, Typography, Rating, Button, IconButton } from '@mui/material';
 import { Share } from '@mui/icons-material';
-import firebase from 'firebase/compat/app';
-import 'firebase/compat/firestore';
+import {firebase} from '../Firebase';
 import { Editor } from '@tinymce/tinymce-react';
-import FryingPan from '../Components/FyingPan'
+import Spinner from '../Components/FyingPan'
 
 
 const RecipeDetail = () => {
@@ -64,6 +63,7 @@ const RecipeDetail = () => {
       }
     };
 
+    //To record if user is already visited the page, so as to not span views
     const clearSessionStorage = () => {
       sessionStorage.removeItem('counterIncremented');
     };
@@ -92,7 +92,7 @@ const RecipeDetail = () => {
     return () => {
       window.removeEventListener('beforeunload', clearSessionStorage);
     };
-  }, [currentRecipe]); // Include currentRecipe in the dependency array
+  }, [currentRecipe]);
   
   
   useEffect(() => {
@@ -147,16 +147,20 @@ const RecipeDetail = () => {
 
   const handleShare = () => {
     const recipeLink = `mamakusrecipe.com/recipe/${currentRecipe.id}`;
-
-    // Create a temporary textarea element to copy the link to clipboard
-    const textarea = document.createElement('textarea');
-    textarea.value = recipeLink;
-    document.body.appendChild(textarea);
-    textarea.select();
-    document.execCommand('copy');
-    document.body.removeChild(textarea);
-    alert('Share link copied!');
+    
+    // Use the Clipboard API to copy the link to the clipboard
+    navigator.clipboard.writeText(recipeLink)
+      .then(() => {
+        // Success message
+        alert('Share link copied!');
+      })
+      .catch((error) => {
+        // Error handling
+        console.error('Error copying to clipboard:', error);
+        alert('Failed to copy share link.');
+      });
   };
+  
   
   return (
     <div style={{ width: '100%', background: 'linear-gradient(to bottom, #ffecd2, #fcb69f)' }}>
@@ -194,7 +198,7 @@ const RecipeDetail = () => {
             Share<Share />
           </IconButton>
           {loadingEditor ? (
-            <FryingPan />
+            <Spinner />
           ) : (
             <Editor
               apiKey={process.env.REACT_APP_FIREBASE_TINYMCE_ID}

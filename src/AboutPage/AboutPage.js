@@ -1,18 +1,8 @@
-import React, { useState, useEffect } from 'react';
-import Spinner from '../Components/FyingPan';
+import React from 'react';
 import Typography from '@mui/material/Typography';
 
 
 const Aboutpage = () => {
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() =>{
-    setTimeout(() => setLoading(false), 1000);
-  })
-
-  if (loading) {
-    return <Spinner/>;
-  }
 
   return (
     <div style={{background: 'linear-gradient(to bottom, #ffecd2, #fcb69f)', minHeight:'5vh'}}>
