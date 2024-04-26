@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { Card, CardContent, CardMedia, Typography, Grid } from '@mui/material';
+import { Card, CardContent, CardMedia, Typography, Grid, Fade } from '@mui/material';
 import { db } from '../Firebase';
-import { Link } from 'react-router-dom'; // Import Link for navigation
+import { Link } from 'react-router-dom';
 
 
 const CategoriesPage = () => {
@@ -44,17 +44,36 @@ const CategoriesPage = () => {
 };
 
 const CategoryCard = ({ category }) => {
-  const { name, image } = category;
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const bottomScrollPosition = window.innerHeight + window.scrollY;
+      const cardPosition = document.getElementById(category.id).offsetTop;
+      if (bottomScrollPosition > cardPosition && !visible) {
+        setVisible(true);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    handleScroll(); // Check visibility on component mount
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, [category.id, visible]);
 
   return (
-    <Card>
-      <CardMedia component="img" image={image} alt={name} />
-      <CardContent>
-        <Typography variant="h6" component="div" style={{ textAlign: 'center' }} sx={{ fontFamily: "Kaushan Script, cursive" }}>
-          {name}
-        </Typography>
-      </CardContent>
-    </Card>
+    <Fade in={visible}>
+      <Card id={category.id} style={{ transition: 'opacity 0.5s ease-in-out' }}>
+        <CardMedia component="img" image={category.image} alt={category.name} />
+        <CardContent>
+          <Typography variant="h6" component="div" style={{ textAlign: 'center' }} sx={{ fontFamily: "Kaushan Script, cursive" }}>
+            {category.name}
+          </Typography>
+        </CardContent>
+      </Card>
+    </Fade>
   );
 };
 

@@ -12,7 +12,7 @@ const SearchBar = ({ handleSearch, pageTitle }) => {
 
   return (
     <div className="search-bar" style={{textAlign: 'center', margin: 50}}>
-      <Typography variant="h3" sx={{ margin: '60px', color: 'black', fontFamily:"Kaushan Script, cursive"}}>{pageTitle}</Typography>
+      <Typography variant="h2" sx={{ margin: '60px', color: 'black', fontFamily:"Kaushan Script, cursive"}}>{pageTitle}</Typography>
       <FormControl sx={{ m: 1, minWidth: 120 }}>
         <TextField
           id="filled-search"
