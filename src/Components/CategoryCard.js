@@ -38,8 +38,8 @@ const ActionAreaCard = ({ category }) => {
       }}
     >
       <CardActionArea component={RouterLink} to={`/category/${category.id}`}>
-        <CardMedia style={{ height: 400, width: '100%' }} component="img" image={category.image} alt={category.image} />
-        <CardContent style={{ minHeight: 130 }}>
+        <CardMedia style={{ height: 250, width: '100%' }} component="img" image={category.image} alt={category.image} />
+        <CardContent style={{ minHeight: 30 }}>
         <Typography variant="h6" component="div" style={{ textAlign: 'center' }} sx={{ fontFamily: "Kaushan Script, cursive" }}>
             {category.name}
           </Typography>
