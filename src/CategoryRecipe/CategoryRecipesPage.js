@@ -4,19 +4,21 @@ import SearchBar from '../Components/SearchBar';
 import { db } from '../Firebase';
 import RecipeList from '../Components/RecipeList';
 import Pagination from '../Components/Pagination';
-
+import Spinner from '../Components/FyingPan'
 
 const CategoryRecipesPage = () => {
   const { category } = useParams();
-  const [recipes, setRecipes] = useState([]);
+  const [currentRecipes, setRecipes] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
-  const [recipesPerPage] = useState(12); // Adjust the number of recipes per page as needed
+  const [recipesPerPage] = useState(3);
+  const [loading, setLoading] = useState(true);
   let { state } = useLocation();
   
   useEffect(() => {
     const fetchRecipes = async () => {
       try {
+        setLoading(true);
         const recipeData = [];
         const snapshot = await db.collection('users').where('category', 'array-contains', state.categoryId).get();
         snapshot.forEach(doc => {
@@ -25,40 +27,55 @@ const CategoryRecipesPage = () => {
         setRecipes(recipeData);
       } catch (error) {
         console.error('Error fetching recipes:', error);
+      } finally {
+        setLoading(false);
       }
     };
 
     fetchRecipes();
   }, [category, state]);
 
-  // Pagination
-  const indexOfLastRecipe = currentPage * recipesPerPage;
-  const indexOfFirstRecipe = indexOfLastRecipe - recipesPerPage;
-  const currentRecipes = recipes.slice(indexOfFirstRecipe, indexOfLastRecipe);
 
   // Change page
   const paginate = pageNumber => setCurrentPage(pageNumber);
   
   // Search functionality
-  const handleSearch = term => setSearchTerm(term);
+  const handleSearch = term => {
+    setSearchTerm(term);
+    // Reset to first page when searching
+    setCurrentPage(1);
+  };
 
-    // Filter recipes based on search term
-    const filteredRecipes = currentRecipes.filter(recipe =>
-      recipe.title.toLowerCase().includes(searchTerm.toLowerCase())
+
+  // Filter recipes based on search term
+  const filteredRecipes = currentRecipes.filter(recipe =>
+    recipe.title.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+    // Recalculate pagination based on filtered recipes
+    const filteredIndexOfLastRecipe = currentPage * recipesPerPage;
+    const filteredIndexOfFirstRecipe = filteredIndexOfLastRecipe - recipesPerPage;
+    const filteredCurrentRecipes = filteredRecipes.slice(
+      filteredIndexOfFirstRecipe,
+      filteredIndexOfLastRecipe
     );
-  
 
   return (
     <div style={{ background: 'linear-gradient(to bottom, #ffecd2, #fcb69f)',paddingTop:10 }}>
-      <SearchBar handleSearch={handleSearch} pageTitle={"Recipes for " +state.categoryId}/>
-      <RecipeList recipes={filteredRecipes} />
-      {/* Pagination component */}
-      <Pagination
-        recipesPerPage={recipesPerPage}
-        totalRecipes={recipes.length}
-        paginate={paginate}
-      />
-      {/* <Pagination recipesPerPage={recipesPerPage} totalRecipes={recipes.length} paginate={paginate} currentPage={currentPage} /> */}
+      <SearchBar handleSearch={handleSearch} pageTitle={`Recipes for ${state.categoryId}`} />
+      {loading ? (
+        <Spinner />
+      ) : (
+        <>
+          <RecipeList recipes={filteredCurrentRecipes} />
+          {/* Pagination component */}
+          <Pagination
+            recipesPerPage={recipesPerPage}
+            totalRecipes={filteredRecipes.length}
+            paginate={paginate}
+          />
+        </>
+      )}
     </div>
   );
 };

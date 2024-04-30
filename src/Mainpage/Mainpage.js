@@ -3,7 +3,7 @@ import RecipeList from '../Components/RecipeList';
 import Pagination from '../Components/Pagination';
 import SearchBar from '../Components/SearchBar';
 import Spinner from '../Components/FyingPan';
-import {db} from '../Firebase'
+import { db } from '../Firebase';
 
 const Mainpage = () => {
   const [recipes, setRecipes] = useState([]);
@@ -28,42 +28,52 @@ const Mainpage = () => {
         setLoading(false); // Set loading to false regardless of success or failure
       }
     };
-  
+
     const timeoutId = setTimeout(() => fetchRecipes(), 2000);
-  
+
     // Cleanup function to cancel the setTimeout when the component unmounts or the effect re-executes
     return () => clearTimeout(timeoutId);
   }, []);
 
-  if (loading) {
-    return <Spinner/>;
-  }
 
-  // Pagination logic
-  const indexOfLastRecipe = currentPage * recipesPerPage;
-  const indexOfFirstRecipe = indexOfLastRecipe - recipesPerPage;
-  const currentRecipes = recipes.slice(indexOfFirstRecipe, indexOfLastRecipe);
-  
   // Change page
   const paginate = pageNumber => setCurrentPage(pageNumber);
-  
+
   // Search functionality
-  const handleSearch = term => setSearchTerm(term);
-  
+  const handleSearch = term => {
+    setSearchTerm(term);
+    // Reset to first page when searching
+    setCurrentPage(1);
+  };
+
   // Filter recipes based on search term
-  const filteredRecipes = currentRecipes.filter(recipe =>
+  const filteredRecipes = recipes.filter(recipe =>
     recipe.title.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
+  // Recalculate pagination based on filtered recipes
+  const filteredIndexOfLastRecipe = currentPage * recipesPerPage;
+  const filteredIndexOfFirstRecipe = filteredIndexOfLastRecipe - recipesPerPage;
+  const filteredCurrentRecipes = filteredRecipes.slice(
+    filteredIndexOfFirstRecipe,
+    filteredIndexOfLastRecipe
+  );
+
   return (
-    <div style={{background: 'linear-gradient(to bottom, #ffecd2, #fcb69f)', paddingTop:10}}>
-      <SearchBar handleSearch={handleSearch} pageTitle={"Latest and greatest"}/>
-      <RecipeList recipes={filteredRecipes} />
+    <div style={{ background: 'linear-gradient(to bottom, #ffecd2, #fcb69f)', paddingTop: 10 }}>
+      <SearchBar handleSearch={handleSearch} pageTitle={"Latest and greatest"} />
+      <RecipeList recipes={filteredCurrentRecipes} />
+      {loading ? (
+        <Spinner />
+      ) : (
+        <>
       <Pagination
         recipesPerPage={recipesPerPage}
-        totalRecipes={recipes.length}
+        totalRecipes={filteredRecipes.length}
         paginate={paginate}
-      />
+        />
+        </>
+      )}
     </div>
   );
 };
