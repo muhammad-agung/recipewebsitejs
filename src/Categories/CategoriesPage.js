@@ -31,7 +31,7 @@ const CategoriesPage = () => {
       </Typography>
       <Grid container spacing={4} justifyContent="center" padding={1}>
         {categories.map((category) => (
-          <Grid item key={category.id} xs={12} sm={6} md={3}>
+          <Grid item key={category.id} xs={6} sm={4} md={2.4}>
             {/* Wrap the CategoryCard with Link */}
             <Link to={`/category/${category.id}`}  state={{ categoryId: category.name }} style={{ textDecoration: 'none' }}>
               <CategoryCard category={category} />
