@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Card, CardContent, CardMedia, Typography, Grid, Fade } from '@mui/material';
+import { Card, CardContent, CardMedia, Typography, Grid } from '@mui/material';
 import { db } from '../Firebase';
 import { Link } from 'react-router-dom';
 
@@ -64,8 +64,7 @@ const CategoryCard = ({ category, index }) => {
   }, [category.id, visible]);
 
   return (
-    <Fade in={visible}>
-      <Card id={category.id} style={{ transition: 'opacity 0.5s ease-in-out' }}>
+      <Card id={category.id}s>
         <CardMedia component="img" image={category.image} alt={category.name} />
         <CardContent>
           <Typography variant="h6" component="div" style={{ textAlign: 'center' }} sx={{ fontFamily: "Kaushan Script, cursive" }}>
@@ -73,7 +72,6 @@ const CategoryCard = ({ category, index }) => {
           </Typography>
         </CardContent>
       </Card>
-    </Fade>
   );
 };
 
