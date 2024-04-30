@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Card, CardContent, CardMedia, Typography, Grid } from '@mui/material';
+import { Card, CardContent, CardMedia, Typography, Grid, Fade } from '@mui/material';
 import { db } from '../Firebase';
 import { Link } from 'react-router-dom';
 
@@ -25,8 +25,8 @@ const CategoriesPage = () => {
   }, []);
 
   return (
-    <div style={{ background: 'linear-gradient(to bottom, #ffecd2, #fcb69f)', paddingTop:10 }}>
-      <Typography variant="h2" gutterBottom style={{ textAlign: 'center', margin: '20px' }} fontFamily={"Kaushan Script, cursive"}>
+    <div style={{ background: 'linear-gradient(to bottom, #ffecd2, #fcb69f)', padding:40 }}>
+      <Typography variant="h2" gutterBottom style={{ textAlign: 'center'}} fontFamily={"Kaushan Script, cursive"}>
         Categories
       </Typography>
       <Grid container spacing={4} justifyContent="center" padding={1}>
@@ -43,8 +43,8 @@ const CategoriesPage = () => {
   );
 };
 
-const CategoryCard = ({ category, index }) => {
-  const [visible, setVisible] = useState(index === 0);
+const CategoryCard = ({ category }) => {
+  const [visible, setVisible] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -64,7 +64,8 @@ const CategoryCard = ({ category, index }) => {
   }, [category.id, visible]);
 
   return (
-      <Card id={category.id}s>
+    <Fade in={visible}>
+      <Card id={category.id} style={{ transition: 'opacity 0.5s ease-in-out' }}>
         <CardMedia component="img" image={category.image} alt={category.name} />
         <CardContent>
           <Typography variant="h6" component="div" style={{ textAlign: 'center' }} sx={{ fontFamily: "Kaushan Script, cursive" }}>
@@ -72,6 +73,7 @@ const CategoryCard = ({ category, index }) => {
           </Typography>
         </CardContent>
       </Card>
+    </Fade>
   );
 };
 
