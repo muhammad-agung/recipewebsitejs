@@ -1,11 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { CardActionArea, Stack, Rating, Typography, CardMedia, CardContent, Card } from '@mui/material';
-import VisibilityIcon from '@mui/icons-material/Visibility';
-import { Link as RouterLink } from 'react-router-dom';
-import { firebase } from '../Firebase';
+import { CardActionArea, Typography, CardMedia, CardContent, Card } from '@mui/material';
 
 const ActionAreaCard = ({ category }) => {
-  const [count, setCount] = useState(0); 
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {

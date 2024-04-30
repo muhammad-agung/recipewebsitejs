@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Card, CardContent, CardMedia, Typography, Grid, Fade } from '@mui/material';
+import {Typography, Grid } from '@mui/material';
 import { db } from '../Firebase';
 import { Link } from 'react-router-dom';
 import CategoryCard from '../Components/CategoryCard'
