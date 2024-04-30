@@ -37,7 +37,7 @@ const ActionAreaCard = ({ category }) => {
         transform: `translateY(${isVisible ? 0 : '20px'})`, // Move card from bottom to top
       }}
     >
-      <CardActionArea component={RouterLink} to={`/category/${category.id}`}>
+      <CardActionArea>
         <CardMedia style={{ height: 250, width: '100%' }} component="img" image={category.image} alt={category.image} />
         <CardContent style={{ minHeight: 30 }}>
         <Typography variant="h6" component="div" style={{ textAlign: 'center' }} sx={{ fontFamily: "Kaushan Script, cursive" }}>
