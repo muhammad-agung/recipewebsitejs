@@ -43,8 +43,8 @@ const CategoriesPage = () => {
   );
 };
 
-const CategoryCard = ({ category }) => {
-  const [visible, setVisible] = useState(false);
+const CategoryCard = ({ category, index }) => {
+  const [visible, setVisible] = useState(index === 0);
 
   useEffect(() => {
     const handleScroll = () => {
