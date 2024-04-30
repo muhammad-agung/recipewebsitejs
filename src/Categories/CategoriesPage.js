@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardMedia, Typography, Grid, Fade } from '@mui/material';
 import { db } from '../Firebase';
 import { Link } from 'react-router-dom';
+import CategoryCard from '../Components/CategoryCard'
 
 
 const CategoriesPage = () => {
@@ -43,38 +44,38 @@ const CategoriesPage = () => {
   );
 };
 
-const CategoryCard = ({ category }) => {
-  const [visible, setVisible] = useState(false);
+// const CategoryCard = ({ category }) => {
+//   const [visible, setVisible] = useState(false);
 
-  useEffect(() => {
-    const handleScroll = () => {
-      const bottomScrollPosition = window.innerHeight + window.scrollY;
-      const cardPosition = document.getElementById(category.id).offsetTop;
-      if (bottomScrollPosition > cardPosition && !visible) {
-        setVisible(true);
-      }
-    };
+//   useEffect(() => {
+//     const handleScroll = () => {
+//       const bottomScrollPosition = window.innerHeight + window.scrollY;
+//       const cardPosition = document.getElementById(category.id).offsetTop;
+//       if (bottomScrollPosition > cardPosition && !visible) {
+//         setVisible(true);
+//       }
+//     };
 
-    window.addEventListener('scroll', handleScroll);
-    handleScroll(); // Check visibility on component mount
+//     window.addEventListener('scroll', handleScroll);
+//     handleScroll(); // Check visibility on component mount
 
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
-  }, [category.id, visible]);
+//     return () => {
+//       window.removeEventListener('scroll', handleScroll);
+//     };
+//   }, [category.id, visible]);
 
-  return (
-    <Fade in={visible}>
-      <Card id={category.id} style={{ transition: 'opacity 0.5s ease-in-out' }}>
-        <CardMedia component="img" image={category.image} alt={category.name} />
-        <CardContent>
-          <Typography variant="h6" component="div" style={{ textAlign: 'center' }} sx={{ fontFamily: "Kaushan Script, cursive" }}>
-            {category.name}
-          </Typography>
-        </CardContent>
-      </Card>
-    </Fade>
-  );
-};
+//   return (
+//     <Fade in={visible}>
+//       <Card id={category.id} style={{ transition: 'opacity 0.5s ease-in-out' }}>
+//         <CardMedia component="img" image={category.image} alt={category.name} />
+//         <CardContent>
+//           <Typography variant="h6" component="div" style={{ textAlign: 'center' }} sx={{ fontFamily: "Kaushan Script, cursive" }}>
+//             {category.name}
+//           </Typography>
+//         </CardContent>
+//       </Card>
+//     </Fade>
+//   );
+// };
 
 export default CategoriesPage;
