@@ -29,7 +29,7 @@ const CategoriesPage = () => {
       <Typography variant="h2" gutterBottom style={{ textAlign: 'center', margin: '20px' }} fontFamily={"Kaushan Script, cursive"}>
         Categories
       </Typography>
-      <Grid container spacing={2} justifyContent="center" padding={2}>
+      <Grid container spacing={4} justifyContent="center" padding={1}>
         {categories.map((category) => (
           <Grid item key={category.id} xs={12} sm={6} md={3}>
             {/* Wrap the CategoryCard with Link */}
